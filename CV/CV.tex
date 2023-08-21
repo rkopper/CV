@@ -1,0 +1,735 @@
+    % !TEX TS-program = pdflatexmk
+
+\documentclass[wideaddress]{vitae}
+
+%\renewcommand*{\bibliographyhead}[1]{}
+
+\usepackage[letterpaper]{geometry}
+\usepackage{marvosym}
+
+
+\usepackage{url}
+
+%\usepackage[labeled,resetlabels]{multibib}
+%\usepackage[resetlabels]{multibib}
+\usepackage[maxbibnames=99,backend=bibtex,style=numeric-verb,sorting=ydnt]{biblatex}
+
+
+
+
+\usepackage{enumitem}
+\usepackage{etaremune}
+\usepackage{textcomp}
+\usepackage{tabto}
+\usepackage{datetime}
+
+
+% %Define bibliographies
+% \newcites{B,V,J,C,O,PO,N,P,T,PA}%
+%    {Book Chapters:,%
+%     Edited Volumes:,%
+%     Refereed Journal Articles:,%
+%     Refereed Conference Proceedings:,%
+%     Refereed Workshops Papers:,%
+%     {Refereed Posters, Extended Abstracts and Abstracts:},
+%     Preprints and Other Non-refereed Publications:,%
+%     Panels:,%
+%     Presentations and Talks:,%
+%     }
+
+% \ifx true false
+
+% -------------------------------------------------------------------------------------
+% references in reverse order
+% -------------------------------------------------------------------------------------
+
+% Define a custom bibliography environment with modified left margin indentation
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{prefixnumber}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{0.7cm} % Adjust the value as needed
+      \setlength{\leftmargin}{0cm}   % Adjust the value as needed
+      \addtolength{\leftmargin}{\labelwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}}
+  {\endlist}
+  {\item}
+
+% Count total number of entries in each refsection
+\AtDataInput{%
+  \csnumgdef{entrycount:\therefsection}{%
+    \csuse{entrycount:\therefsection}+1}}
+
+% Print the labelnumber as the total number of entries in the
+% current refsection, minus the actual labelnumber, plus one
+\DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+\newrobustcmd*{\mkbibdesc}[1]{%
+  % \number\numexpr\csuse{entrycount:\therefsection}+1-#1\relax}
+  \number\numexpr\csuse{entrycount:\therefsection}+1-#1.\relax}
+% \fi
+
+% \DeclareFieldFormat{labelnumber}{#1.}
+\DeclareFieldFormat{labelnumberwidth}{#1}
+% -------------------------------------------------------------------------------------
+% -------------------------------------------------------------------------------------
+
+
+\ifx true false
+\addbibresource[label=B]{master-bibliography.bib}
+\addbibresource[label=V]{master-bibliography.bib}
+\addbibresource[label=J]{master-bibliography.bib}
+\addbibresource[label=C]{master-bibliography.bib}
+\addbibresource[label=O]{master-bibliography.bib}
+\addbibresource[label=PO]{master-bibliography.bib}
+\addbibresource[label=N]{master-bibliography.bib}
+\addbibresource[label=P]{master-bibliography.bib}
+\addbibresource[label=T]{master-bibliography.bib}
+\addbibresource[label=PA]{master-bibliography.bib}
+\fi
+\addbibresource{master-bibliography.bib}
+
+
+%\renewcommand{\labelitemi}{$\diamond$}
+\newcommand{\VT}{Virginia Tech}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New commands and environments
+
+% This defines how the name looks
+\newcommand{\bigname}[1]{
+	\begin{center}\fontfamily{phv}\selectfont\Huge\scshape#1\end{center}
+}
+
+% A ressection is a main section (<H1>Section</H1>)
+\newenvironment{ressection}[1]{
+	\vspace{4pt}
+	{\fontfamily{phv}\selectfont\Large#1}
+	\begin{itemize}
+	\vspace{3pt}
+}{
+	\end{itemize}
+}
+
+%mm/yy format
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
+
+
+\makeatletter
+\def\@biblabel#1{#1. }
+
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\refname}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{ |||#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+% %make my name bold in publications
+% \def\FormatName#1{%
+%   \def\myname{Regis Kopper}%
+%   \edef\name{#1}%
+%   \ifx\name\myname
+%     \textbf{#1}%
+%   \else
+%     #1%
+%   \fi
+% }
+
+
+
+%make my name bold in publications
+\newtoggle{abx@bool@moreRegis}
+\newtoggle{abx@bool@moreKopper}
+
+\def\mkbibnamegiven#1{%
+  \def\mygivenname{Regis}%
+  \edef\name{#1}%
+  \iftoggle{abx@bool@moreKopper}{\togglefalse{abx@bool@moreKopper}}{}%
+  \ifx\name\mygivenname
+    \iftoggle{abx@bool@moreRegis}{}{\toggletrue{abx@bool@moreKopper}}%
+    \textbf{#1}%
+  \else
+    #1%
+  \fi
+}
+
+\def\mkbibnamefamily#1{%
+  \def\myfamilyname{Kopper}%
+  \edef\name{#1}%
+  \iftoggle{abx@bool@moreRegis}{\togglefalse{abx@bool@moreRegis}}{}%
+  \ifx\name\myfamilyname
+    \iftoggle{abx@bool@moreKopper}{}{\toggletrue{abx@bool@moreKopper}}%
+    \textbf{#1}%
+  \else
+    #1%
+  \fi
+}
+
+
+% A resitem is a simple list element in a ressection (first level)
+\newcommand{\resitem}[1]{
+	\item \begin{flushleft} #1 \end{flushleft}
+}
+
+% A ressubitem is a simple list element in anything but a ressection (second level)
+\newcommand{\ressubitem}[1]{
+	\item \begin{flushleft} #1 \end{flushleft}
+}
+
+% A resbigitem is a complex list element for stuff like jobs and education:
+%  Arg 1: Name of company or university
+%  Arg 2: Location
+%  Arg 3: Title and/or date range
+\newcommand{\resbigitem}[3]{
+	\item
+	\textbf{#1}---#2 \\
+	\textit{#3}
+}
+
+% This is a list that comes with a resbigitem
+\newenvironment{ressubsec}[3]{
+	\resbigitem{#1}{#2}{#3}
+	\begin{itemize}
+}{
+	\end{itemize}
+}
+
+% This is a simple sublist
+\newenvironment{reslist}[1]{
+	\resitem{\textbf{#1}}
+	\begin{itemize}
+}{
+	\end{itemize}
+}
+
+% This is a simple numbered sublist
+\newenvironment{resnumberedlist}[1]{
+	\resitem{\textbf{#1}}
+	\begin{enumerate}
+}{
+	\end{enumerate}
+}
+
+\author{Regis Kopper}
+
+\address{317 College Avenue\\
+  161 Petty Building\\
+  Greensboro, NC  27412 USA\\
+  +1 336 256 1112\\
+  \url{kopper@uncg.edu}\\
+  \url{https://orcid.org/0000-0003-2081-7061}\\
+  Updated: \monthyeardate\today}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Appointments}
+\begin{itemize}
+	\item{Assistant Professor of Computer Science, University of North Carolina at Greensboro\\(August 2019--present)}
+	\item{Adjunct Assistant Professor of Mechanical Engineering and Materials Science,\\Duke University (August 2019--present)}
+	\item{Assistant Research Professor of Mechanical Engineering and Materials Science,\\Duke University (October 2015--July 2019)}
+	\item{Assistant Research Professor of Computer Science, Duke University\\(July 2016--July 2019)}
+	\item{Core Graduate Faculty, Computational Media Arts and Cultures Program, Duke University\\(August 2016--July 2019)}
+	\item{Director, Duke immersive Virtual Environment (DiVE), Duke University\\(December 2012--July 2019)}
+	\item{Research Scientist, Pratt School of Engineering, Duke University\\(December 2012--October 2015)}
+	\item{Post-Doctoral Associate, University of Florida (June-2011--December 2012)}
+\end{itemize}
+
+
+\section{Education}
+\begin{description}
+	\item{\textbf{Ph.D.~Computer Science,~College of Engineering,~\VT. 2011}}
+		\begin{itemize}
+			\item{Thesis: Understanding and Improving Distal Pointing Interaction}
+ 			\item{Thesis Advisor: Dr. Doug A. Bowman, \VT}
+	 		\item{Thesis Committee: Dr. Ravin Balakrishnan, Dr. Chris North, Dr. D. Scott McCrickard, Dr. Deborah Tatar}
+%			\item{Passed preliminary examination in July 2008}
+%			\item{Course Work GPA: 3.83}
+		\end{itemize}
+	\item{\textbf{Graduate Certificate in Human-Computer Interaction, \VT. 2010}}
+%		\begin{itemize}
+%			\item{Training in multiple HCI disciplines}
+%			\item{Course Work GPA: 4.0}
+%		\end{itemize}
+ 	\item{\textbf{M.S.~Computer Science, Pontifical Catholic University, Porto Alegre, Brazil. 2006}}
+		 \begin{itemize}
+			 \item{Master Thesis Title: Project and Evaluation of Navigation Techniques for Multiscale Virtual Environments (in Portuguese)}
+			 \item{Did part of the research work as a Visiting Scholar at Virginia Tech from January-August 2005}
+			 \item{Research paper published and presented at IEEE Virtual Reality 2006 conference}
+		 \end{itemize}
+	 \item{\textbf{B.A.~Computer Science, Pontifical Catholic University, Porto Alegre, Brazil. 2003}}
+		 \begin{itemize}
+			 \item{Graduation Thesis Title: Project and Development of Touch Generation Devices (in Portuguese)}
+		 \end{itemize}
+ \end{description}
+
+\section{Research Interests}
+\begin{itemize}
+	\item{Extended reality and virtual environments}
+	\item{Human-computer interaction}
+	\item{Virtual reality training and simulation}
+	\item{Three-dimensional (3D) user interfaces}
+	%\item{Distal pointing interaction at remotely located displays}
+	\item{Extended reality user experience}
+	%\item{Usability engineeringc}
+	\item{Virtual human interaction}
+	\item{3D Interaction techniques}
+	\item{Models of human motor behavior}
+\end{itemize}
+
+\section{Honors and Awards}
+\begin{itemize}
+	\item{Winner, 3DUI  at the 2020 IEEE Virtual Reality Conference.}
+	\item{Winner, best research demo award at the 2020 IEEE Virtual Reality Conference.}
+	\item{Winner, honorable mention for best poster award at 2016 IEEE Virtual Reality Conference.}
+	\item{Research Impact in Human-Computer Interaction Award. Presented by the Center for\\Human-Computer Interaction, Virginia Tech. October, 2015.}
+	\item{Winner, best paper award at the 2011 IEEE 3DUI Symposium.}
+	\item{Winner, best student poster award at the 2011 Human Systems Integration Symposium.}
+	\item{Member of the winning team of the first 3D User Interfaces Grand Prize, held during the 2010 IEEE 3DUI Symposium.}
+	\item{Winner, honorable mention for best paper award at 2009 JVRC.}
+	\item{Recipient of scholarship from the Brazilian National Science and Technology Development Council (CNPq) that covered tuition and allowances during Master of Science study.}
+\end{itemize}
+
+\section{Funding}
+%\begin{description}
+    %\item{
+    I have a total lifetime collaborative funding support as investigator of \textbf{$\sim$\$5.3 Million}, of which I was directly responsible to manage \textbf{$\sim$\$2.15 Million}. Since I became a tenure-track faculty member (August, 2019), I have been PI or Co-PI/Co-I in federal grants amounting to \textbf{$\sim$\$2.19 Million}, of which I was directly responsible to manage \textbf{$\sim$\$1.13 Million}. As a tenure-track faculty member, the amount of funding I have received averages \textbf{$\sim$\$750K per year} in total costs, with an average of \textbf{$\sim$\$381K per year} which I am directly responsible to manage.%}
+%\end{description}
+
+\section{Current Grant Support}
+% \begin{enumerate}
+\begin{etaremune}
+	\item{2022--2025, National Institute of Standards and Technology, Regis Kopper (Role: lead PI), ``FirstModulAR: Designing and Integrating Augmented Reality User Interface Modules for First Responders.'', \$1,799,040 (responsible for \$910,738)}
+	\item{2022--2023, Luso-American Development Foundation, Regis Kopper (Role: co-PI), Collaborative Project (PI Joaquim Jorge, University of Lisbon) ``US/Portugal Partnership on Extended Reality and Artificial Intelligence toward Accessible and Diverse Healthcare Training and Delivery.'', 25,000~\EURtm}
+	\item{2022--2025, UNCG Regis Kopper (Role: co-I), Collaborative Project (PI Asha Kutty, UNCG) ``Racial Reconciliation and the Design Studio: Creating Pathways and Partnerships between Design, Virtual Reality and Social Justice.'', \$16,000}
+	\item{2021--2024, National Archives, Regis Kopper (Role: co-I), Collaborative project (PI Tekla Johnson, JCSU) ``Augmented Reality Landscapes: African American Urbanism'', \$194,938 (responsible for \$18,500)}
+\end{etaremune}
+% \end{enumerate}
+
+
+\section{Previous Grant Support}
+% \begin{enumerate}
+\begin{etaremune}
+	\item{2021--2023, National Institute of Standards and Technology, Regis Kopper (Role: lead PI), ``Validation and Demonstration of a Customizable Virtual Realty-Based Traffic Stop Simulation for Training and Practice with the Hillsborough Police Department.'', \$198,561}
+	\item{2021--2023, NextGen Interactions, Regis Kopper (Role: sole PI), ``Evaluation of Public Safety Virtual Reality Physical Interfaces', \$8,015}
+	\item{2021--2022, City of Greensboro Catalizing Creativity Grant, Regis Kopper (Role: co-I), Collaborative project (PI Asha Kutty) ``Virtual Magnolia House'', \$3,667 (responsible for \$3,500)}
+	\item{2018--2022, National Institute of Standards and Technology, Regis Kopper (Role: sole PI), ``Design, Prototyping and Evaluation of Next Generation Public Safety User Interfaces'', \$599,632}
+	\item{2020--2021, UNCG Faculty First Awards, Regis Kopper (Role: sole PI), ``Design and Preliminary Evaluation of a Tool for Diagnostics and Training through Video-Based Mixed Reality Telepresence'', \$5,000}
+	\item{2019--2020, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Smart Archaeology: New Developments and Research Questions'', \$20,000}
+	\item{2018--2019, American Association of Neurological Surgeons, Regis Kopper (Role: mentor), Collaborative project (PI Patrick Codd), ``Augmented Reality Assisted Placement of External Ventricular Drain'', \$10,000}
+	\item{2018--2019, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Smart Archaeology'', \$20,000}
+	\item{2017--2019, US-Ignite Ignite NC Reverse Pitch Grand Prize Winner, Regis Kopper (Role: sole PI), ``PanoVR--Collaborative 360\textdegree{} Video Explorer'', \$19,000 + \$120,000 in IBM Cloud Credits}
+of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit Communities (SGC), Regis Kopper (Role: PI), ``A Prototype Conferencing Tool for 360\textdegree{} Video Analysis'', \$25,000}
+	\item{2016--2017, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Digital Cities and Poly-Sensing Environments'', \$22,500}
+	\item{2015--2016, FAPESP (Brazil), Regis Kopper (Role: co-I), Multi-institutional collaborative project (PI Marcelo Zuffo), ``CyberArchaeology - Virtual Reality and E-science meet Archaeology'', \$17,238.50 + R\$69,346.25}
+	\item{2014--2016, National Science Foundation MRI 1428681, Regis Kopper (Role: PI), Collaborative project with Duke colleagues (Co-I Kevin LaBar and Co-I Silvia Ferrari), \$399,720}
+	\item{2012--2015, United States Army Medical Research and Materiel Command W81XWH-12-1-0397, Regis Kopper (Role: co-I), Collaborative project with Duke colleagues (PI Joseph Izatt), ``Field Deployable Optical Coherence Tomography for Triage of Ocular Trauma'', \$1,000,000}
+	\item{2014--2015, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Digital Archaeological and Historic Landscapes: Laboratory and Fieldwork'', \$19,000}
+	\item{2013--2014, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``The Digital Landscape'', \$19,500}
+	\item{2013--2014, Duke University Pratt School of Engineering Seed Grant, Regis Kopper (Role: co-I), Seed funding with Duke colleagues (PI Marc Sommers), ``Monkey DiVE'', \$16,500}
+	\item{2009--2014, National Institutes of Health R01 DA027802, Regis Kopper (Role: co-I), Collaborative project with Duke colleagues (PI Kevin LaBar): ``Brain imaging studies of negative reinforcement in humans'', \$2,033,168}
+	\item{2013, National Institute for Occupational Safety and Health 00HCCMED-2013-60677, Regis Kopper (Role: sole PI), Contract: ``Comparative Evaluation of Input Devices for Virtual Reality Mine Simulation'', \$30,205}
+\end{etaremune}
+% \end{enumerate}
+
+\section{Publications}
+
+
+
+\begin{refsection}
+  \textbf{Book Chapters:}
+  \nocite{Bowman:2019aa,McMahan:2014qe,Kopper:2003fk}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Edited Volumes:}
+  \nocite{Kopper:2021aa,Argelaguet:2020aa,Bebis:2015nr,Bebis:2015zr}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Refereed Journal Articles:}	
+  \nocite{Souza:2021ab,Cao:2021ue,Wang:2021wy,liu2021psychophysiological,Palmeira:2020aa,Olk:2018aa,Rao:2018aa,Lercari:2017aa,Mehta:2017aa,Ragan:2015lq,Johnson:2014fk,Bacim2013,Robb:2013uq,Ragan:2013qf,Chuah:2013fr,Johnson2012,Figueroa:2010fk,Kopper2010,Ragan:2010kx}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Refereed Conference Proceedings:}
+  \nocite{Moreira:2023aa,Palmeira:2021vp,Souza:2020aa,Souza:2018aa,Clements:2018aa,Cao:2018aa,Naz:2017aa,Zielinski:2017aa,Zielinski:2016by,Zielinski:2015kl,Rivera-Gutierrez:2014fk,Zielinski:2013fk,Chuah2012,Krishnan:2012dq,Bowman:2012ys,Kopper:2011zr,Bowman:2009fk,Rieder:2006nx,Kopper:2006,Kopper:2000kl}  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Refereed Workshops Papers:}
+  \nocite{Lofca:2023aa,Taweel:2023aa,Negrao:2023aa,Serras:2023aa,Grandi:2021aa,Bennett:2014aa,Lynch:2014yg,Zielinski:2014aa,Kopper:2012fk,Kopper:2011kx}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Refereed Posters, Extended Abstracts and Abstracts:}
+  \nocite{Grandi:2023aa,Grandi:2020aa,Grandi:2019aa,Liu:2019aa,Zhao:2018aa,Appelbaum:2018aa,Appelbaum:2017aa,Borba:2017aa,Borba:2017ab,Correa:2017aa,Cutler:2017aa,Soares:2017aa,Zielinski:2017ab,Appelbaum:2016uk,Borba:2016aa,Borba:2016ab,Mehta:2016aa,Rao:2016xi,Soares:2016aa,Zielinski:2016fj,Burkins:2015fp,Olk:2015yu,Izatt:2014dk,Lercari:2014sp,Lercari:2014db,Zielinski:2014bh,Nicolelis:2014cr,Lercari:2013dl,Stinson:2011tg}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Preprints and Other Non-refereed Publications:}
+  \nocite{cao2023real,Kopper:2009ij,Judge:2008vn,Kopper:2008dp}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\section{Patents}
+\begin{refsection}
+  \nocite{Kopper:2019af, Kopper:2020aa}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\section{Additional Scholarly Output}
+
+\begin{refsection}
+  \textbf{Panels:}
+  \nocite{Andrade:2018aa,Yang:2017aa,Bruzelius:2016hb,Kopper:2016cl,North:2015db,Waid:2023aa}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\begin{refsection}
+  \textbf{Presentations and Talks:}
+  \nocite{Kopper:2020ab,Kopper:2020ac,Kopper:2019ag,Kopper:2019ae,Kopper:2019ad,Kopper:2019ac,Kopper:2019ab,Kopper:2019aa,Kopper:2018aa,Kopper:2016ng,Kopper:2015fi,Kopper:2015wj,Kopper:2014ys,Kopper:2014jo,Kopper:2014zv,Kopper:2013yi,Kopper:2013yk,Kopper:2012yw,Kopper:2012fd,Kopper:2011vp,Kopper:2011tn,Kopper:2008mw}
+  \printbibliography[heading=none]
+\end{refsection}
+
+\section{Service}
+\begin{itemize}
+	\item{Editorship}
+		\begin{itemize}
+			\item{Guest Editor: Computer \& Graphics Special Section on the 2022 Symposium on Virtual and Augmented Reality, 2022}
+                \item{Guest Editor: Computer \& Graphics Special Section on the 2021 Symposium on Virtual and Augmented Reality, 2021}
+			\item{Editor: Frontiers in Virtual Reality, 10/2019--present}
+			\item{Associate Editor: Frontiers in Virtual Reality, 10/2019--present}
+			\item{Associate Editor: Frontiers in Robotics and AI (Section: Virtual Environments),\\07/2018--present}
+			\item{Review Editor: Frontiers in Virtual Environments, 2014--present}
+		\end{itemize}
+	\item{Chairing}
+		\begin{itemize}
+			\item{Program chair: 2022 Brazilian Symposium on Virtual and Augmented Reality (SVR)}
+			\item{Program chair: 2021 IEEE Virtual Reality Conference, Conference Paper Track}
+			\item{Program chair: 2020 IEEE Virtual Reality Conference, Conference Paper Track}
+			\item{Videos chair: 2018 IEEE Virtual Reality Conference}
+			\item{Publicity chair: 2017 IEEE Virtual Reality Conference}
+			\item{Program chair: 2016 Brazilian Symposium on Virtual and Augmented Reality (SVR)}
+			\item{Posters chair: 2016 ICAT-EGVE Conference}
+			\item{Workshops chair: 2014--2016 IEEE Virtual Reality Conference}
+			\item{Awards chair: 2015 ICAT-EGVE Conference}
+			\item{Posters chair: 2013 IEEE Virtual Reality Conference}
+			\item{Student Volunteers chair: 2012 IEEE Virtual Reality Conference}
+			\item{Local Arrangements chair for the IEEE Virtual Reality 2007 Conference}
+		\end{itemize}
+	\item{Program Committees}
+		\begin{itemize}
+			\item{International program committee: IEEE International Symposium on Mixed and Augmented Reality, Journal Papers Track, 2023}
+			\item{International program committee: 19th EuroVR International Conference, EuroVR 2022}
+			\item{International program committee: IEEE Conference on Virtual Reality and 3D User Interface, Conference Papers Track, 2019}
+			\item{International program committee: IEEE Conference on Virtual Reality and 3D User Interfaces, Journal Papers Track, 2018}
+			\item{International program committee: IEEE Virtual Reality Conference, 2017}
+			\item{International program committee: IEEE Symposium on 3D User Interfaces, 2013--2017}
+			\item{International program committee: ICAT-EGVE conference, 2016}
+			\item{International program committee: IEEE Virtual Reality Conference, 2013--2015}
+			\item{International program committee: International Symposium on Visual Computing, 2014}
+		\end{itemize}
+    \item Award Committees
+        \begin{itemize}
+            \item Member, IEEE VGTC Virtual Reality Service Award Committee (first time award was given).
+        \end{itemize}
+            
+	\item Member of Scientific Panels for Grant Applications:
+		\begin{itemize}
+			\item{NIH (2017, 2018)}
+			\item{NSF (2017, 2019, 2020, 2021)}
+		\end{itemize}
+	\item Reviewer for Journals:
+		\begin{itemize}
+			\item{Scientific Reports}
+			\item{Frontiers in Virtual Reality}
+			\item{Frontiers in Virtual Environmnents}
+			\item{IEEE Computer Graphics \& Applications}
+			\item{International Journal of Human-Computer Studies}
+			\item{IEEE Transactions on Visualization and Computer Graphics}
+			\item{Computer \& Graphics}
+			\item{Presence Teleoperators and Virtual Environments}
+		\end{itemize}
+	\item Reviewer for Conferences:
+		\begin{itemize}
+			\item{ACM SIGCHI Conference on Human Factors in Computer Systems (CHI)}
+			\item{IEEE Virtual Reality (VR)}
+			\item{IEEE Symposium on 3D User Interfaces (3DUI)}
+			\item{ACM International Conference on Intelligent User Interfaces (IUI)}
+			\item{ACM Spatial User Interfaces (SUI)}
+			\item{Brazilian Symposium on Virtual and Augmented Reality (SVR)}
+			\item{ICAT-EGVE}
+		\end{itemize}
+\end{itemize}
+
+\section{Teaching}
+\begin{itemize}
+        \item \textbf{Principles of Operating Systems}              					\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Spring 2022
+        \end{itemize}
+        \item \textbf{Virtual Reality Systems Research and Design}              		\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Spring 2020
+            \item Spring 2021
+        \end{itemize}
+        \item \textbf{Human-Computer Interface Development}		    					\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Fall 2020
+        \end{itemize}
+        \item \textbf{Principles of Database Systems}              						\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Spring 2020
+            \item Fall 2020
+            \item Spring 2021
+            \item Fall 2022
+        \end{itemize}
+        \item \textbf{Preparing Data for Analytics}              						\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Fall 2019
+        \end{itemize}
+        \item \textbf{Human-Computer Interaction} 				    					\\\textit{Duke University}
+        \begin{itemize}
+            \item Fall 2018
+        \end{itemize}
+        \item \textbf{Virtual Reality Systems Research and Design}						\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Spring 2017
+            \item Spring 2018
+            \item Spring 2019
+        \end{itemize}
+        \item \textbf{Introduction to Programming and User Interface Design in Unity 3D}\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Fall 2016
+        \end{itemize}
+        \item \textbf{Introduction to Interaction Design and Virtual Environments}   	\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item Spring 2014
+        \end{itemize}
+\end{itemize}
+
+\section{Student Advising}
+\begin{description}
+	\begin{resnumberedlist}{Current Ph.D. students:}
+	\resitem{Etibar Aliyev, Ph.D. expected 2027.}
+	\end{resnumberedlist}
+
+	\begin{resnumberedlist}{Current M.S. students:}
+	\resitem{Jerry Terrell, M.S. expected 2024.}
+	\end{resnumberedlist}
+
+	\begin{resnumberedlist}{Completed Ph.D. students:}
+	\resitem{Zekun Cao, Ph.D. Dissertation Title. Thesis Title: The Role of Granulated Rest Frames on Mitigating Visually-Induced Motion Sickness and Its Application.}
+	\end{resnumberedlist}
+
+	\begin{resnumberedlist}{Completed M.S. students:}
+	\resitem{Yunhan Yang, M.S. 2018. Thesis Title: Evaluation of an Eye Tracking Selection Technique with Progressive Refinement.}
+	\resitem{Zekun Cao, M.S. 2017. Thesis Title: The effects of rest frames in simulator sickness reduction.}
+	\end{resnumberedlist}
+	
+	\begin{resnumberedlist}{Undergraduate Student Advising:}
+	\resitem{Gabriel Costa de Oliveria, Capstone Project. 2020. Thesis Title: Evaluation of an Eye Tracking Selection Technique with Progressive Refinement.}
+	\end{resnumberedlist}
+	
+
+\end{description}
+
+\section{Thesis Committees}
+\begin{description}
+	\begin{resnumberedlist}{Member of Doctoral Theses Committees:}
+	\resitem{Bruna Fernandes Da Rocha. Mindfulness, technology and labor health: effects of different intervention formats with health professionals (in Portuguese). Doctoral Proposal Defense. Pontifical Catholic University of Rio Grande to Sul (PUCRS), Brazil, 2021.}
+	\resitem{Andre Montes Rodrigues. Interactive visual analysis of hermetic and dense virtual models: the case of grain structures. Final defense. University of Sao Paulo, Brazil, 2021.}
+	\resitem{Zekun Cao. Preliminary Examination. The role of granulated rest frames on mitigating visually-induced motion sickness and its application. Duke University, 2020.}
+\resitem{Yujiro Okuya. CAD Data Modification Techniques for Design Reviews with Heterogeneous Interactive Systems. Final defense. University Paris-Sud, 2019.}
+	\resitem{Zekun Cao. Qualifying Exam. Duke University, 2018.}
+	\resitem{Jillian Clements. Evaluating Human Performance in Virtual Reality Based on Physiological Signal Analysis. Final defense. Duke University, 2018.}
+	\resitem{Brian Lee. Qualifying Exam. Duke University, 2018.}
+	\resitem{Jillian Clements. Synchronizing Electroencephalography and Kinematic Behavior in Immersive Virtual Reality. Preliminary exam. Duke University, 2017.}
+	\resitem{Asma Naz. Interactive Living Space for Neo-Nomads: An Anticipatory Approach. Final defense. University of Texas, Dallas, 2017.}
+	\resitem{Olavo da Rosa Belloc. A Scalable Communications Architecture for Immersive Visualization Systems (\textit{original in Portuguese -- Uma Arquitetura de Comunica\c{c}\~ao Escal\'avel para Sistemas de Visualiza\c{c}\~ao Imersivos}). Final defense. University of S\~ao Paulo, Brazil, 2016.}
+	\end{resnumberedlist}
+
+	\begin{resnumberedlist}{Member of Master's Theses Committees:}
+	\resitem{Renan Luigi Martins Guarese. Augmenting analytics: use case studies of Situated Data Visualization towards decision-making, Master thesis, Federal University of Rio Grande do Sul, Brazil, 2019.}
+	\resitem{Chang Liu. The Alife Bestiary: An AR Object Recognition Project on the Archivolt of Alife, Master thesis, Duke University, 2019.}
+	\resitem{Yuchen Zhao. VR Touch Museum. Master thesis, Duke University, 2018.}
+	\resitem{Daniel Furnas. The Effect Of Computerised Verb Network Strengthening Treatment On Lexical Retrieval In Aphasia. Master thesis, University of Florida, 2012.}
+	\end{resnumberedlist}
+	
+	\begin{resnumberedlist}{External Examiner for Master's Theses:}
+	\resitem{Tanaka Alois Chiromo. Efficient rendering of real-world environments in a virtual reality application, using segmented multi-resolution meshes. Master thesis, University of Pretoria, 2020.}
+	\end{resnumberedlist}
+
+    \begin{resnumberedlist}{Member of Master's Project Defense Committees:}
+	\resitem{Tingyu Shi. Multiple Sclerosis Lesion Extraction Using 3D U-Net. University of North Carolina at Greensboro, 2021.}
+	\resitem{Xinrui Zhang. 3D Image Registration of Functional MRI Using Image and Spatial Transformer Network. University of North Carolina at Greensboro, 2021.}
+	\resitem{Pavan Koda. Fake News Detection in Social Media using Machine Learning. University of North Carolina at Greensboro, 2021.}
+	\resitem{Rohith Rangineni. Predicting the Online Chat Abuse and Comparison with Neural Networks. University of North Carolina at Greensboro, 2021.}
+
+    \end{resnumberedlist}
+    
+
+\end{description}
+
+
+\section{Academic Experience}
+\begin{description}
+	\begin{resbigitem}{University of North Carolina at Greensboro}{Greensboro, NC}{Assistant Professor of Computer Science, Duke University:August 2019--present}
+	\end{resbigitem}
+
+	\begin{resbigitem}{Duke University}{Durham, NC}{Adjunct Assistant Professor of Mechanical Engineering and Materials Science, Duke University:\\August 2019--present}
+	\end{resbigitem}
+
+	\begin{ressubsec}{Duke University}{Durham, NC}{Assistant Research Professor of Computer Science: July 2016--July 2019}
+		\ressubitem{Secondary Appointment}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Duke University}{Durham, NC}{Assistant Research Professor of Mechanical Engineering and Materials Science: October 2015--July 2019}
+		\ressubitem{Serving as Director of the Duke immersive Virtual Environment (DiVE) lab}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Duke University}{Durham, NC}{Research Scientist: January 2014--October 2015}
+		\ressubitem{Serving as Director of the Duke immersive Virtual Environment (DiVE) lab}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Duke University}{Durham, NC}{Visiting Research Scholar: December 2012--December 2013}
+		\ressubitem{Serving as Director of the Duke immersive Virtual Environment (DiVE) lab}
+	\end{ressubsec}
+
+	\begin{ressubsec}{University of Florida}{Gainesville, Fl}{Postdoctoral Associate: August 2011--December 2012}
+		\ressubitem{Research the use of virtual humans as conversational agents in interpersonal skills training}
+		\ressubitem{Design and development of educational systems for the training of assessment and diagnosis of medical conditions}
+		\ressubitem{Research advisor: Dr. Benjamin Lok}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Virginia Tech}{Blacksburg, Va}{Graduate Research Assistant: August 2009--June 2011}
+		\ressubitem{Benefits of immersion for military training}
+		\ressubitem{Design and development of immersive systems to evaluate the effectiveness of different display characteristics on training tasks}
+		\ressubitem{Research advisor: Dr. Doug A. Bowman}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Virginia Tech}{Blacksburg, Va}{Graduate Teaching Assistant: August 2006--Summer 2009}
+		\ressubitem{Grading programs, exams and papers}
+		\ressubitem{Assisting professor during in-class activities}
+		\ressubitem{Assisting students with questions}
+		\ressubitem{Teaching assistant for}
+		\begin{itemize}
+			\ressubitem{Data Structures (Fall 2006)}
+			\ressubitem{Human Computer Interaction (Spring 2007 through Fall 2008)}
+			\ressubitem{Introduction to Programming in Java (Spring 2009)}
+			\ressubitem{Introduction to Programming in C (Summer 2009)}
+		\end{itemize}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Virginia Tech}{Blacksburg, Va}{Graduate Research Assistant: May--August 2008}
+		\ressubitem{Development of notecards system for the iPhone}
+		\ressubitem{Research advisor: Dr. Francis Quek}
+	\end{ressubsec}
+\end{description}
+
+
+\section{Related Work Experience}
+\begin{description}
+	\begin{ressubsec}{Envirolink, Inc}{Raleigh, NC}{Scientific Consultant: September 2017--December 2018}
+		\ressubitem{Oversight of development of a Virtual Reality experience for waste water treatment plant}
+		\ressubitem{Ensuring that best design practices are being engaged by external software development contractor}
+		\ressubitem{Bridging the gap between the user and the technical software development team}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Bosch Research and Technology Center}{Palo Alto, CA}{Intern: May--August 2007}
+		\ressubitem{Human-Computer Interaction Intern}
+		\ressubitem{Developed floor plan extraction tool for laser range finder}
+		\ressubitem{Research advisor: Dr. David Krum}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Hewlett Packard}{Porto Alegre, RS, Brazil}{Software Engineer: March 2006--August 2006}
+		\ressubitem{Development of administration software for middle and high end LaserJet printers}
+		\ressubitem{Only member of project team in Brazil}
+		\ressubitem{Self management of responsibilities}
+		\ressubitem{Worked closely to coworkers in the HP Headquarters in Boise, ID}
+		\ressubitem{Left HP to pursue graduate study in the USA}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Partner Informatica}{Porto Alegre, RS, Brazil}{Program Manager: May 2003--February 2004}
+		\ressubitem{Outsourced from Webstuff (working on site) for the development of a web-based finance system}
+		\ressubitem{Managed a team of 4 developers}
+	\end{ressubsec}
+
+	\begin{ressubsec}{Webstuff Informatica}{Porto Alegre, RS, Brazil}{Co-owner: March 2001--March 2004}
+		\ressubitem{Managed an office with six workers}
+		\ressubitem{Development of web-based systems}
+		\ressubitem{Worked closely with clients}
+		\ressubitem{Acquired good communication skills}
+	\end{ressubsec}
+\end{description}
+
+\section{Skills}
+\begin{description}
+	\begin{reslist}{Research:}
+		\ressubitem{Experienced with research since 2003.}
+		\ressubitem{Experience with interdisciplinary research with collaborators in engineering, medicine and the humanities.}
+		\ressubitem{3D Interaction research experience, with publication of papers in international journals and conferences.}
+		\ressubitem{Experienced with theoretical models of Human-Computer Interaction.}
+	\end{reslist}
+	\begin{reslist}{Languages:}
+		\ressubitem{\textbf{English}: fluent in reading, speaking and writing}
+		\ressubitem{\textbf{Portuguese}: fluent in reading, speaking and writing}
+		\ressubitem{\textbf{Spanish}: fluent in reading and speaking; intermediate in writing}
+	\end{reslist}
+\end{description}
+
+\section{Early Achievements}
+\begin{itemize}
+	\item{Taught the course entitled ``Development of Virtual Reality Applications'' during the Brazilian Symposium on Virtual Reality (2003-2004)}
+	\item{Lived in Sydney, Australia as an exchange student  (1995--1996)}
+\end{itemize}
+
+%%%%%% Publications Section using BibTeX
+%
+%\section{References}
+%\textbf{Doug A. Bowman, PhD}\\
+%Associate Professor of Computer Science\\
+%Virginia Tech, Blacksburg, Va\\
+%\url{bowman@vt.edu}\\
+%\url{http://people.cs.vt.edu/bowman}\\
+
+%\textbf{David M. Krum, PhD}\\
+%Research Scientist and Technical Co-director of the Mixed Reality Lab\\
+%University of Southern California\\
+%Institute for Creative Technologies\\ 
+%\url{krum@ict.usc.edu}\\
+
+%\textbf{D. Scott McCrickard, PhD}\\
+%Associate Professor of Computer Science\\
+%Virginia Tech, Blacksburg, Va\\
+%\url{mccricks@vt.edu}\\
+%\url{http://people.cs.vt.edu/mccricks}\\
+\end{document}
