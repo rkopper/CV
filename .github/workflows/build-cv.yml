@@ -24,8 +24,17 @@ jobs:
 
       - name: Build PDF
         run: |
-          latexmk -pdf RegisKopperCV.tex      # ← replace with your root .tex filename
-          mv RegisKopperCV.tex cv.pdf         # ← rename if you like
+          # Verify latexmk is installed
+          which latexmk
+          # Build the PDF from your main .tex file
+          latexmk -pdf RegisKopperCV.tex
+          # Rename output to cv.pdf for consistency
+          mv RegisKopperCV.pdf cv.pdf
+
+      - name: Debug workspace
+        run: |
+          echo "Workspace contents after build:"
+          ls -lh .
 
       - name: Commit & push PDF
         run: |
