@@ -22,7 +22,7 @@ jobs:
       - name: Install LaTeX dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk biber
+          sudo apt-get install -y latexmk biber texlive-latex-extra
 
       - name: Set up TeX Live
         uses: teatimeguest/setup-texlive-action@v3.4.1
