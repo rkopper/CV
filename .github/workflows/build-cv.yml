@@ -19,6 +19,11 @@ jobs:
           # so we can push back
           persist-credentials: true
 
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk biber
+
       - name: Set up TeX Live
         uses: teatimeguest/setup-texlive-action@v3.4.1
 
