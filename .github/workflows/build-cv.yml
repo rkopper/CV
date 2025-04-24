@@ -1,0 +1,37 @@
+name: Build CV PDF
+
+on:
+  push:
+    # only rebuild when you change .tex/.bib files
+    paths:
+      - '**.tex'
+      - '**.bib'
+      - '.github/workflows/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v3
+        with:
+          # so we can push back
+          persist-credentials: true
+
+      - name: Set up TeX Live
+        uses: teatimeguest/setup-texlive-action@v3.4.1
+
+      - name: Build PDF
+        run: |
+          latexmk -pdf RegisKopperCV.tex      # ← replace with your root .tex filename
+          mv RegisKopperCV.tex cv.pdf         # ← rename if you like
+
+      - name: Commit & push PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f cv.pdf
+          # only commit (and push) if it changed
+          git diff --quiet --exit-code || \
+            (git commit -m "chore: rebuild CV PDF [skip ci]" && git push)

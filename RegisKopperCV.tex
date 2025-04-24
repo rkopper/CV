@@ -13,17 +13,33 @@
 
 %\usepackage[labeled,resetlabels]{multibib}
 %\usepackage[resetlabels]{multibib}
+
 \usepackage[maxbibnames=99,backend=biber,style=numeric-verb,sorting=ydnt]{biblatex}
+% Map custom panel entrytype to misc so biblatex has a driver
+\DeclareBibliographyAlias{panel}{misc}
 
 
-
-
+% Ensure description items with nested lists stay with their subitems
+\usepackage{etoolbox}
 \usepackage{enumitem}
 \usepackage{etaremune}
+\usepackage{needspace}
+
+% Ensure section titles stay with their first content line
+\preto\section{\Needspace{8\baselineskip}}
+
+% Ensure refsection headings stay with their first bibliography entry
+\BeforeBeginEnvironment{refsection}{\Needspace{5\baselineskip}}
+\makeatletter
+\AtBeginEnvironment{description}{%
+  \let\olditem\item
+  \def\item{\nopagebreak[4]\olditem}%
+}
+\makeatother
+
 \usepackage{textcomp}
 \usepackage{tabto}
 \usepackage{datetime}
-
 
 % %Define bibliographies
 % \newcites{B,V,J,C,O,PO,N,P,T,PA}%
@@ -344,7 +360,7 @@
 	\item{2018--2019, American Association of Neurological Surgeons, Regis Kopper (Role: mentor), Collaborative project (PI Patrick Codd), ``Augmented Reality Assisted Placement of External Ventricular Drain'', \$10,000}
 	\item{2018--2019, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Smart Archaeology'', \$20,000}
 	\item{2017--2019, US-Ignite Ignite NC Reverse Pitch Grand Prize Winner, Regis Kopper (Role: sole PI), ``PanoVR--Collaborative 360\textdegree{} Video Explorer'', \$19,000 + \$120,000 in IBM Cloud Credits}
-of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit Communities (SGC), Regis Kopper (Role: PI), ``A Prototype Conferencing Tool for 360\textdegree{} Video Analysis'', \$25,000}
+ 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit Communities (SGC), Regis Kopper (Role: PI), ``A Prototype Conferencing Tool for 360\textdegree{} Video Analysis'', \$25,000}
 	\item{2016--2017, Bass Connections Award, Regis Kopper (Role: co-I), Collaborative project (PI Maurizio Forte), ``Digital Cities and Poly-Sensing Environments'', \$22,500}
 	\item{2015--2016, FAPESP (Brazil), Regis Kopper (Role: co-I), Multi-institutional collaborative project (PI Marcelo Zuffo), ``CyberArchaeology - Virtual Reality and E-science meet Archaeology'', \$17,238.50 + R\$69,346.25}
 	\item{2014--2016, National Science Foundation MRI 1428681, Regis Kopper (Role: PI), Collaborative project with Duke colleagues (Co-I Kevin LaBar and Co-I Silvia Ferrari), \$399,720}
