@@ -1,0 +1,243 @@
+    % !TEX TS-program = pdflatexmk
+
+\documentclass[wideaddress]{vitae}
+
+%\renewcommand*{\bibliographyhead}[1]{}
+
+\usepackage[letterpaper]{geometry}
+\usepackage{marvosym}
+
+
+\usepackage{url}
+
+%\usepackage[labeled,resetlabels]{multibib}
+%\usepackage[resetlabels]{multibib}
+\usepackage[maxbibnames=99,backend=biber,style=numeric-verb,sorting=ydnt]{biblatex}
+
+
+
+
+\usepackage{enumitem}
+\usepackage{etaremune}
+\usepackage{textcomp}
+\usepackage{tabto}
+\usepackage{datetime}
+
+
+% %Define bibliographies
+% \newcites{B,V,J,C,O,PO,N,P,T,PA}%
+%    {Book Chapters:,%
+%     Edited Volumes:,%
+%     Refereed Journal Articles:,%
+%     Refereed Conference Proceedings:,%
+%     Refereed Workshops Papers:,%
+%     {Refereed Posters, Extended Abstracts and Abstracts:},
+%     Preprints and Other Non-refereed Publications:,%
+%     Panels:,%
+%     Presentations and Talks:,%
+%     }
+
+% \ifx true false
+
+% -------------------------------------------------------------------------------------
+% references in reverse order
+% -------------------------------------------------------------------------------------
+
+% Define a custom bibliography environment with modified left margin indentation
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{0.7cm} % Adjust the value as needed
+      \setlength{\leftmargin}{0cm}   % Adjust the value as needed
+      \addtolength{\leftmargin}{\labelwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}}
+  {\endlist}
+  {\item}
+
+% Count total number of entries in each refsection
+\AtDataInput{%
+  \csnumgdef{entrycount:\therefsection}{%
+    \csuse{entrycount:\therefsection}+1}}
+
+% Print the labelnumber as the total number of entries in the
+% current refsection, minus the actual labelnumber, plus one
+\DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+\newrobustcmd*{\mkbibdesc}[1]{%
+  % \number\numexpr\csuse{entrycount:\therefsection}+1-#1\relax}
+  \number\numexpr\csuse{entrycount:\therefsection}+1-#1.\relax}
+% \fi
+
+% \DeclareFieldFormat{labelnumber}{#1.}
+\DeclareFieldFormat{labelnumberwidth}{#1}
+% -------------------------------------------------------------------------------------
+% -------------------------------------------------------------------------------------
+
+
+\ifx true false
+\addbibresource[label=B]{master-bibliography.bib}
+\addbibresource[label=V]{master-bibliography.bib}
+\addbibresource[label=J]{master-bibliography.bib}
+\addbibresource[label=C]{master-bibliography.bib}
+\addbibresource[label=O]{master-bibliography.bib}
+\addbibresource[label=PO]{master-bibliography.bib}
+\addbibresource[label=N]{master-bibliography.bib}
+\addbibresource[label=P]{master-bibliography.bib}
+\addbibresource[label=T]{master-bibliography.bib}
+\addbibresource[label=PA]{master-bibliography.bib}
+\fi
+\addbibresource{master-bibliography.bib}
+
+
+%\renewcommand{\labelitemi}{$\diamond$}
+\newcommand{\VT}{Virginia Tech}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New commands and environments
+
+% This defines how the name looks
+\newcommand{\bigname}[1]{
+	\begin{center}\fontfamily{phv}\selectfont\Huge\scshape#1\end{center}
+}
+
+% A ressection is a main section (<H1>Section</H1>)
+\newenvironment{ressection}[1]{
+	\vspace{4pt}
+	{\fontfamily{phv}\selectfont\Large#1}
+	\begin{itemize}
+	\vspace{3pt}
+}{
+	\end{itemize}
+}
+
+%mm/yy format
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
+
+
+\makeatletter
+\def\@biblabel#1{#1. }
+
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\refname}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{ |||#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+% %make my name bold in publications
+% \def\FormatName#1{%
+%   \def\myname{Regis Kopper}%
+%   \edef\name{#1}%
+%   \ifx\name\myname
+%     \textbf{#1}%
+%   \else
+%     #1%
+%   \fi
+% }
+
+
+
+%make my name bold in publications
+\newtoggle{abx@bool@moreRegis}
+\newtoggle{abx@bool@moreKopper}
+
+\def\mkbibnamegiven#1{%
+  \def\mygivenname{Regis}%
+  \edef\name{#1}%
+  \iftoggle{abx@bool@moreKopper}{\togglefalse{abx@bool@moreKopper}}{}%
+  \ifx\name\mygivenname
+    \iftoggle{abx@bool@moreRegis}{}{\toggletrue{abx@bool@moreKopper}}%
+    \textbf{#1}%
+  \else
+    #1%
+  \fi
+}
+
+\def\mkbibnamefamily#1{%
+  \def\myfamilyname{Kopper}%
+  \edef\name{#1}%
+  \iftoggle{abx@bool@moreRegis}{\togglefalse{abx@bool@moreRegis}}{}%
+  \ifx\name\myfamilyname
+    \iftoggle{abx@bool@moreKopper}{}{\toggletrue{abx@bool@moreKopper}}%
+    \textbf{#1}%
+  \else
+    #1%
+  \fi
+}
+
+
+% A resitem is a simple list element in a ressection (first level)
+\newcommand{\resitem}[1]{
+	\item \begin{flushleft} #1 \end{flushleft}
+}
+
+% A ressubitem is a simple list element in anything but a ressection (second level)
+\newcommand{\ressubitem}[1]{
+	\item \begin{flushleft} #1 \end{flushleft}
+}
+
+% A resbigitem is a complex list element for stuff like jobs and education:
+%  Arg 1: Name of company or university
+%  Arg 2: Location
+%  Arg 3: Title and/or date range
+\newcommand{\resbigitem}[3]{
+	\item
+	\textbf{#1}---#2 \\
+	\textit{#3}
+}
+
+% This is a list that comes with a resbigitem
+\newenvironment{ressubsec}[3]{
+	\resbigitem{#1}{#2}{#3}
+	\begin{itemize}
+}{
+	\end{itemize}
+}
+
+% This is a simple sublist
+\newenvironment{reslist}[1]{
+	\resitem{\textbf{#1}}
+	\begin{itemize}
+}{
+	\end{itemize}
+}
+
+% This is a simple numbered sublist
+\newenvironment{resnumberedlist}[1]{
+	\resitem{\textbf{#1}}
+	\begin{enumerate}
+}{
+	\end{enumerate}
+}
+
+\author{Regis Kopper Publications}
+
+\address{\url{https://orcid.org/0000-0003-2081-7061}\\
+  Updated: \monthyeardate\today}
+
+
+\begin{document}
+
+\maketitle
+
+\input{publications}
+\end{document}

@@ -7,12 +7,13 @@
 \usepackage[letterpaper]{geometry}
 \usepackage{marvosym}
 
+\usepackage[utf8]{inputenc}
 
 \usepackage{url}
 
 %\usepackage[labeled,resetlabels]{multibib}
 %\usepackage[resetlabels]{multibib}
-\usepackage[maxbibnames=99,backend=bibtex,style=numeric-verb,sorting=ydnt]{biblatex}
+\usepackage[maxbibnames=99,backend=biber,style=numeric-verb,sorting=ydnt]{biblatex}
 
 
 
@@ -47,7 +48,7 @@
 \defbibenvironment{bibliography}
   {\list
      {\printtext[labelnumberwidth]{%
-        \printfield{prefixnumber}%
+        \printfield{labelprefix}%
         \printfield{labelnumber}}}
      {\setlength{\labelwidth}{0.7cm} % Adjust the value as needed
       \setlength{\leftmargin}{0cm}   % Adjust the value as needed
@@ -178,7 +179,7 @@
   \iftoggle{abx@bool@moreRegis}{\togglefalse{abx@bool@moreRegis}}{}%
   \ifx\name\myfamilyname
     \iftoggle{abx@bool@moreKopper}{}{\toggletrue{abx@bool@moreKopper}}%
-    \textbf{#1}%
+    \textbf{#1}
   \else
     #1%
   \fi
@@ -231,11 +232,11 @@
 
 \author{Regis Kopper}
 
-\address{317 College Avenue\\
-  161 Petty Building\\
-  Greensboro, NC  27412 USA\\
+\address{107 Atanasoff Hall\\
+  2434 Osborn Drive\\
+  Ames, IA  50011 USA\\
   +1 336 256 1112\\
-  \url{kopper@uncg.edu}\\
+  \url{kopper@iastate.edu}\\
   \url{https://orcid.org/0000-0003-2081-7061}\\
   Updated: \monthyeardate\today}
 
@@ -247,8 +248,10 @@
 
 \section{Appointments}
 \begin{itemize}
-	\item{Assistant Professor of Computer Science, University of North Carolina at Greensboro\\(August 2019--present)}
-	\item{Adjunct Assistant Professor of Mechanical Engineering and Materials Science,\\Duke University (August 2019--present)}
+	\item{Assistant Professor of Computer Science, Iowa State University\\(August 2024--present)}
+	\item{Adjunc Assistant Professor of Computer Science, University of North Carolina at Greensboro\\(August 2024--present)}
+    \item{Assistant Professor of Computer Science, University of North Carolina at Greensboro\\(August 2019--July 2024)}
+	\item{Adjunct Assistant Professor of Mechanical Engineering and Materials Science,\\Duke University (August 2019--May 2022)}
 	\item{Assistant Research Professor of Mechanical Engineering and Materials Science,\\Duke University (October 2015--July 2019)}
 	\item{Assistant Research Professor of Computer Science, Duke University\\(July 2016--July 2019)}
 	\item{Core Graduate Faculty, Computational Media Arts and Cultures Program, Duke University\\(August 2016--July 2019)}
@@ -301,7 +304,7 @@
 
 \section{Honors and Awards}
 \begin{itemize}
-	\item{Winner, 3DUI  at the 2020 IEEE Virtual Reality Conference.}
+	\item{Winner, 3D User Interfaces Grand Prize at the 2023 IEEE Virtual Reality Conference.}
 	\item{Winner, best research demo award at the 2020 IEEE Virtual Reality Conference.}
 	\item{Winner, honorable mention for best poster award at 2016 IEEE Virtual Reality Conference.}
 	\item{Research Impact in Human-Computer Interaction Award. Presented by the Center for\\Human-Computer Interaction, Virginia Tech. October, 2015.}
@@ -322,7 +325,6 @@
 % \begin{enumerate}
 \begin{etaremune}
 	\item{2022--2025, National Institute of Standards and Technology, Regis Kopper (Role: lead PI), ``FirstModulAR: Designing and Integrating Augmented Reality User Interface Modules for First Responders.'', \$1,799,040 (responsible for \$910,738)}
-	\item{2022--2023, Luso-American Development Foundation, Regis Kopper (Role: co-PI), Collaborative Project (PI Joaquim Jorge, University of Lisbon) ``US/Portugal Partnership on Extended Reality and Artificial Intelligence toward Accessible and Diverse Healthcare Training and Delivery.'', 25,000~\EURtm}
 	\item{2022--2025, UNCG Regis Kopper (Role: co-I), Collaborative Project (PI Asha Kutty, UNCG) ``Racial Reconciliation and the Design Studio: Creating Pathways and Partnerships between Design, Virtual Reality and Social Justice.'', \$16,000}
 	\item{2021--2024, National Archives, Regis Kopper (Role: co-I), Collaborative project (PI Tekla Johnson, JCSU) ``Augmented Reality Landscapes: African American Urbanism'', \$194,938 (responsible for \$18,500)}
 \end{etaremune}
@@ -332,6 +334,7 @@
 \section{Previous Grant Support}
 % \begin{enumerate}
 \begin{etaremune}
+	\item{2022--2023, Luso-American Development Foundation, Regis Kopper (Role: co-PI), Collaborative Project (PI Joaquim Jorge, University of Lisbon) ``US/Portugal Partnership on Extended Reality and Artificial Intelligence toward Accessible and Diverse Healthcare Training and Delivery.'', 25,000~\EURtm}
 	\item{2021--2023, National Institute of Standards and Technology, Regis Kopper (Role: lead PI), ``Validation and Demonstration of a Customizable Virtual Realty-Based Traffic Stop Simulation for Training and Practice with the Hillsborough Police Department.'', \$198,561}
 	\item{2021--2023, NextGen Interactions, Regis Kopper (Role: sole PI), ``Evaluation of Public Safety Virtual Reality Physical Interfaces', \$8,015}
 	\item{2021--2022, City of Greensboro Catalizing Creativity Grant, Regis Kopper (Role: co-I), Collaborative project (PI Asha Kutty) ``Virtual Magnolia House'', \$3,667 (responsible for \$3,500)}
@@ -354,60 +357,19 @@ of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit 
 \end{etaremune}
 % \end{enumerate}
 
-\section{Publications}
-
-
-
-\begin{refsection}
-  \textbf{Book Chapters:}
-  \nocite{Bowman:2019aa,McMahan:2014qe,Kopper:2003fk}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Edited Volumes:}
-  \nocite{Kopper:2021aa,Argelaguet:2020aa,Bebis:2015nr,Bebis:2015zr}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Refereed Journal Articles:}	
-  \nocite{Souza:2021ab,Cao:2021ue,Wang:2021wy,liu2021psychophysiological,Palmeira:2020aa,Olk:2018aa,Rao:2018aa,Lercari:2017aa,Mehta:2017aa,Ragan:2015lq,Johnson:2014fk,Bacim2013,Robb:2013uq,Ragan:2013qf,Chuah:2013fr,Johnson2012,Figueroa:2010fk,Kopper2010,Ragan:2010kx}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Refereed Conference Proceedings:}
-  \nocite{Moreira:2023aa,Palmeira:2021vp,Souza:2020aa,Souza:2018aa,Clements:2018aa,Cao:2018aa,Naz:2017aa,Zielinski:2017aa,Zielinski:2016by,Zielinski:2015kl,Rivera-Gutierrez:2014fk,Zielinski:2013fk,Chuah2012,Krishnan:2012dq,Bowman:2012ys,Kopper:2011zr,Bowman:2009fk,Rieder:2006nx,Kopper:2006,Kopper:2000kl}  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Refereed Workshops Papers:}
-  \nocite{Lofca:2023aa,Taweel:2023aa,Negrao:2023aa,Serras:2023aa,Grandi:2021aa,Bennett:2014aa,Lynch:2014yg,Zielinski:2014aa,Kopper:2012fk,Kopper:2011kx}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Refereed Posters, Extended Abstracts and Abstracts:}
-  \nocite{Grandi:2023aa,Grandi:2020aa,Grandi:2019aa,Liu:2019aa,Zhao:2018aa,Appelbaum:2018aa,Appelbaum:2017aa,Borba:2017aa,Borba:2017ab,Correa:2017aa,Cutler:2017aa,Soares:2017aa,Zielinski:2017ab,Appelbaum:2016uk,Borba:2016aa,Borba:2016ab,Mehta:2016aa,Rao:2016xi,Soares:2016aa,Zielinski:2016fj,Burkins:2015fp,Olk:2015yu,Izatt:2014dk,Lercari:2014sp,Lercari:2014db,Zielinski:2014bh,Nicolelis:2014cr,Lercari:2013dl,Stinson:2011tg}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\begin{refsection}
-  \textbf{Preprints and Other Non-refereed Publications:}
-  \nocite{cao2023real,Kopper:2009ij,Judge:2008vn,Kopper:2008dp}
-  \printbibliography[heading=none]
-\end{refsection}
-
-\section{Patents}
-\begin{refsection}
-  \nocite{Kopper:2019af, Kopper:2020aa}
-  \printbibliography[heading=none]
-\end{refsection}
+\input{publications}
 
 \section{Additional Scholarly Output}
 
+% \begin{refsection}
+%   \textbf{Courses:}
+
+%   \nocite{jorge2023approaches}
+%   \printbibliography[heading=none]
+% \end{refsection}
+
 \begin{refsection}
+
   \textbf{Panels:}
   \nocite{Andrade:2018aa,Yang:2017aa,Bruzelius:2016hb,Kopper:2016cl,North:2015db,Waid:2023aa}
   \printbibliography[heading=none]
@@ -415,7 +377,7 @@ of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit 
 
 \begin{refsection}
   \textbf{Presentations and Talks:}
-  \nocite{Kopper:2020ab,Kopper:2020ac,Kopper:2019ag,Kopper:2019ae,Kopper:2019ad,Kopper:2019ac,Kopper:2019ab,Kopper:2019aa,Kopper:2018aa,Kopper:2016ng,Kopper:2015fi,Kopper:2015wj,Kopper:2014ys,Kopper:2014jo,Kopper:2014zv,Kopper:2013yi,Kopper:2013yk,Kopper:2012yw,Kopper:2012fd,Kopper:2011vp,Kopper:2011tn,Kopper:2008mw}
+  \nocite{Kopper:2020ab,Kopper:2020ac,Kopper:2019ag,Kopper:2019ae,Kopper:2019ad,Kopper:2019ac,Kopper:2019ab,Kopper:2019aa,Kopper:2018aa,Kopper:2016ng,Kopper:2015fi,Kopper:2015wj,Kopper:2014ys,Kopper:2014jo,Kopper:2014zv,Kopper:2013yi,Kopper:2013yk,Kopper:2012yw,Kopper:2012fd,Kopper:2011vp,Kopper:2011tn,Kopper:2008mw,Kopper:2023aa}
   \printbibliography[heading=none]
 \end{refsection}
 
@@ -447,7 +409,9 @@ of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit 
 		\end{itemize}
 	\item{Program Committees}
 		\begin{itemize}
-			\item{International program committee: IEEE International Symposium on Mixed and Augmented Reality, Journal Papers Track, 2023}
+			\item{International program committee: IEEE Conference on Virtual Reality and 3D User Interface, 2024}
+                \item{International program committee: IEEE VR Workshop on Locomotion and Wayfinding in XR, 2024}
+                \item{International program committee: IEEE International Symposium on Mixed and Augmented Reality, Journal Papers Track, 2023}
 			\item{International program committee: 19th EuroVR International Conference, EuroVR 2022}
 			\item{International program committee: IEEE Conference on Virtual Reality and 3D User Interface, Conference Papers Track, 2019}
 			\item{International program committee: IEEE Conference on Virtual Reality and 3D User Interfaces, Journal Papers Track, 2018}
@@ -459,7 +423,9 @@ of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit 
 		\end{itemize}
     \item Award Committees
         \begin{itemize}
-            \item Member, IEEE VGTC Virtual Reality Service Award Committee (first time award was given).
+            \item Member, IEEE VGTC Virtual Reality Service Award Committee, 2023.
+            \item Member, IEEE VGTC Virtual Reality Best Dissertation Award Committee, 2023.
+            \item Member, IEEE VGTC Virtual Reality Service Award Committee, 2022 (first time award was given).
         \end{itemize}
             
 	\item Member of Scientific Panels for Grant Applications:
@@ -492,47 +458,53 @@ of 	\item{2016--2017, Duke Digital Initiative (DDI) and US-Ignite Smart Gigabit 
 
 \section{Teaching}
 \begin{itemize}
+        \item \textbf{Principles of Database Systems}              						\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item 2023: Fall
+            \item 2022: Fall, Spring
+            \item 2021: Fall, Spring
+            \item 2020: Fall, Spring
+        \end{itemize}
+        \item \textbf{Principles of Virtual Reality Design and Development}        		\\\textit{University of North Carolina at Greensboro}
+        \begin{itemize}
+            \item 2023: Fall
+            \item 2022: Fall
+        \end{itemize}
         \item \textbf{Principles of Operating Systems}              					\\\textit{University of North Carolina at Greensboro}
         \begin{itemize}
-            \item Spring 2022
+            \item 2022: Spring
         \end{itemize}
         \item \textbf{Virtual Reality Systems Research and Design}              		\\\textit{University of North Carolina at Greensboro}
         \begin{itemize}
-            \item Spring 2020
-            \item Spring 2021
+            \item 2021: Spring
+            \item 2020: Spring
         \end{itemize}
         \item \textbf{Human-Computer Interface Development}		    					\\\textit{University of North Carolina at Greensboro}
         \begin{itemize}
-            \item Fall 2020
-        \end{itemize}
-        \item \textbf{Principles of Database Systems}              						\\\textit{University of North Carolina at Greensboro}
-        \begin{itemize}
-            \item Spring 2020
-            \item Fall 2020
-            \item Spring 2021
-            \item Fall 2022
+            \item 2021: Fall
+            \item 2020: Fall
         \end{itemize}
         \item \textbf{Preparing Data for Analytics}              						\\\textit{University of North Carolina at Greensboro}
         \begin{itemize}
-            \item Fall 2019
+            \item 2019: Fall
         \end{itemize}
         \item \textbf{Human-Computer Interaction} 				    					\\\textit{Duke University}
         \begin{itemize}
-            \item Fall 2018
+            \item 2018: Fall
         \end{itemize}
-        \item \textbf{Virtual Reality Systems Research and Design}						\\\textit{University of North Carolina at Greensboro}
+        \item \textbf{Virtual Reality Systems Research and Design}						\\\textit{Duke University}
         \begin{itemize}
-            \item Spring 2017
-            \item Spring 2018
-            \item Spring 2019
+            \item 2019: Spring
+            \item 2018: Spring
+            \item 2017: Spring
         \end{itemize}
-        \item \textbf{Introduction to Programming and User Interface Design in Unity 3D}\\\textit{University of North Carolina at Greensboro}
+        \item \textbf{Introduction to Programming and User Interface Design in Unity 3D}\\\textit{Duke University}
         \begin{itemize}
-            \item Fall 2016
+            \item 2016: Fall
         \end{itemize}
-        \item \textbf{Introduction to Interaction Design and Virtual Environments}   	\\\textit{University of North Carolina at Greensboro}
+        \item \textbf{Introduction to Interaction Design and Virtual Environments}   	\\\textit{Duke University}
         \begin{itemize}
-            \item Spring 2014
+            \item 2014: Spring
         \end{itemize}
 \end{itemize}
 

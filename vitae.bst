@@ -819,6 +819,20 @@ FUNCTION {misc}
   empty.misc.check
 }
 
+FUNCTION {panel}
+{ output.bibitem
+  format.authors output
+  title howpublished new.block.checkb
+  format.title output
+  howpublished new.block.checka
+  howpublished output
+  format.date output
+  new.block
+  note output
+  fin.entry
+}
+
+
 FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
